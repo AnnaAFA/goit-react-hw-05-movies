@@ -1,12 +1,12 @@
 import { HomePage } from 'pages/HomePage';
-import { NavLink, Route, Routes } from 'react-router-dom';
-import {
-  getMovieCast,
-  getMovieDetails,
-  getMovieReviews,
-  getSearchMovies,
-  getTrending,
-} from 'services/api';
+import { Route, Routes } from 'react-router-dom';
+// import {
+//   getMovieCast,
+//   getMovieDetails,
+//   getMovieReviews,
+//   getSearchMovies,
+//   getTrending,
+// } from 'services/api';
 
 export const App = () => {
   return (
