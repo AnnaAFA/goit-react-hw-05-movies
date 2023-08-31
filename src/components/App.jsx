@@ -1,6 +1,5 @@
 import { HomePage } from 'pages/HomePage';
 import { NavLink, Route, Routes } from 'react-router-dom';
-import { SharedLayout } from './SharedLayout/SharedLayout';
 import { DetailsPage } from 'pages/DetailsPage';
 import { Search } from './Search/Search';
 // import {
