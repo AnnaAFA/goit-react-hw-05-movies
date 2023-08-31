@@ -21,7 +21,7 @@ export const DetailsPage = () => {
       }
     };
     fetchSearchMovies();
-    console.log(movieDetails);
+    // console.log(movieDetails);
   }, [movieId]);
 
   return (
