@@ -1,5 +1,8 @@
 import { HomePage } from 'pages/HomePage';
-import { Route, Routes } from 'react-router-dom';
+import { NavLink, Route, Routes } from 'react-router-dom';
+import { SharedLayout } from './SharedLayout/SharedLayout';
+import { DetailsPage } from 'pages/DetailsPage';
+import { Search } from './Search/Search';
 // import {
 //   getMovieCast,
 //   getMovieDetails,
@@ -10,9 +13,20 @@ import { Route, Routes } from 'react-router-dom';
 
 export const App = () => {
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />}></Route>
-      {/* <Route to="/movies">Movies</Route> */}
-    </Routes>
+    <div>
+      <header>
+        <nav>
+          <NavLink to="/">Home</NavLink>
+          <NavLink to="/movies">Movie</NavLink>
+        </nav>
+      </header>
+      <main>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/movies" element={<Search />} />
+          <Route path="/movies/:movieId" element={<DetailsPage />} />
+        </Routes>
+      </main>
+    </div>
   );
 };

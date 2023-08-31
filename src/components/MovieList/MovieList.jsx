@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 export const MovieList = ({ movies }) => {
   return (
@@ -6,9 +6,7 @@ export const MovieList = ({ movies }) => {
       {movies.map(movie => {
         return (
           <li key={movie.id}>
-            <NavLink to={`/movies/${movie.id}`}>
-              {movie.title || movie.name}
-            </NavLink>
+            <Link to={`/movies/${movie.id}`}>{movie.title || movie.name}</Link>
           </li>
         );
       })}
