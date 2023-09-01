@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { getMovieDetails } from 'services/api';
-import { useParams } from 'react-router-dom';
+import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 
 export const DetailsPage = () => {
   const [movieDetails, setMovieDetails] = useState(null);
   const { movieId } = useParams();
+  const location = useLocation();
 
   useEffect(() => {
     if (!movieId) return;
@@ -23,12 +24,13 @@ export const DetailsPage = () => {
     fetchSearchMovies();
     // console.log(movieDetails);
   }, [movieId]);
-
+  console.log(location);
   return (
     <div>
       {/* {error !== null && <p>Oops.. Simesing went wrong</p>} */}
       {movieDetails !== null && (
         <div>
+          <Link to={location.state?.from ?? '/'}>Go back</Link>
           <img
             src={`https://image.tmdb.org/t/p/w200${movieDetails.poster_path}`}
             alt={movieDetails.original_title}
@@ -41,6 +43,13 @@ export const DetailsPage = () => {
             <h2>Genres</h2>
             <p>{movieDetails.genres.map(genre => genre.name).join(' ')}</p>
           </div>
+
+          <div>
+            <p>Additional information</p>
+            <Link to="cast">Cast</Link>
+            <Link to="reviews">Reviews</Link>
+          </div>
+          <Outlet />
         </div>
       )}
     </div>
