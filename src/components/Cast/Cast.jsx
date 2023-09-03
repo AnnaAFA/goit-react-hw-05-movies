@@ -1,8 +1,10 @@
 import { Loader } from 'components/Loader/Loader';
 import Notiflix from 'notiflix';
+import { Wrap } from 'pages/DetailsPage.styled';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getMovieCast } from 'services/api';
+import { Item } from './Cast.styled';
 
 const Cast = () => {
   const [casts, setCasts] = useState([]);
@@ -33,10 +35,10 @@ const Cast = () => {
       {isLoading && <Loader />}
       {error && <p>Opps...Sorry, something went wrong</p>}
       {casts.length > 0 ? (
-        <ul>
+        <Wrap>
           {casts.map(cast => {
             return (
-              <li key={cast.id}>
+              <Item key={cast.id}>
                 <img
                   src={
                     cast?.profile_path
@@ -46,11 +48,11 @@ const Cast = () => {
                   alt={cast.name}
                 />
                 <p>{cast.name}</p>
-                <p>Character:{cast.character}</p>
-              </li>
+                <p>Character : {cast.character}</p>
+              </Item>
             );
           })}
-        </ul>
+        </Wrap>
       ) : (
         <p>Sorry! We don't have any casts for this movie.</p>
       )}

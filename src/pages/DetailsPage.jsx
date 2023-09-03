@@ -1,8 +1,9 @@
 import React, { Suspense, useEffect, useRef, useState } from 'react';
 import { getMovieDetails } from 'services/api';
-import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 import { Loader } from 'components/Loader/Loader';
 import Notiflix from 'notiflix';
+import { BtnBack, DetailsBtn, Wrap, WrapCard } from './DetailsPage.styled';
 
 const DetailsPage = () => {
   const [movieDetails, setMovieDetails] = useState(null);
@@ -34,41 +35,42 @@ const DetailsPage = () => {
   }, [movieId]);
 
   return (
-    <div>
+    <Wrap>
       {isLoading && <Loader />}
       {error && <p>Opps...Sorry, something went wrong</p>}
-      <Link to={backLinkLocationRef.current}>Go back</Link>
+      <BtnBack to={backLinkLocationRef.current}>Go back</BtnBack>
       {movieDetails !== null && (
         <div>
-          {/* <Link to={backLinkLocationRef.current}>Go back</Link> */}
-          <img
-            src={
-              movieDetails?.poster_path
-                ? `https://image.tmdb.org/t/p/w200${movieDetails.poster_path}`
-                : 'https://via.placeholder.com/200x300'
-            }
-            alt={movieDetails.original_title}
-          />
+          <WrapCard>
+            {/* <Link to={backLinkLocationRef.current}>Go back</Link> */}
+            <img
+              src={
+                movieDetails?.poster_path
+                  ? `https://image.tmdb.org/t/p/w200${movieDetails.poster_path}`
+                  : 'https://via.placeholder.com/200x300'
+              }
+              alt={movieDetails.original_title}
+            />
+            <div>
+              <h2>{movieDetails.title}</h2>
+              <p>User Score: {movieDetails.vote_average * 10}%</p>
+              <h2>Overview</h2>
+              <p>{movieDetails.overview}</p>
+              <h2>Genres</h2>
+              <p>{movieDetails.genres.map(genre => genre.name).join(' ')}</p>
+            </div>
+          </WrapCard>
           <div>
-            <h2>{movieDetails.title}</h2>
-            <p>User Score: {movieDetails.vote_average * 10}%</p>
-            <h2>Overview</h2>
-            <p>{movieDetails.overview}</p>
-            <h2>Genres</h2>
-            <p>{movieDetails.genres.map(genre => genre.name).join(' ')}</p>
-          </div>
-
-          <div>
-            <p>Additional information</p>
-            <Link to="cast">Cast</Link>
-            <Link to="reviews">Reviews</Link>
+            <h3>Additional information</h3>
+            <DetailsBtn to="cast">Cast</DetailsBtn>
+            <DetailsBtn to="reviews">Reviews</DetailsBtn>
           </div>
           <Suspense fallback={<Loader />}>
             <Outlet />
           </Suspense>
         </div>
       )}
-    </div>
+    </Wrap>
   );
 };
 

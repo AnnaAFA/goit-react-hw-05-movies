@@ -3,6 +3,7 @@ import MovieList from 'components/MovieList/MovieList';
 import Notiflix from 'notiflix';
 import React, { useEffect, useState } from 'react';
 import { getTrending } from 'services/api';
+import { Wrap } from './HomePage.styled';
 
 const HomePage = () => {
   const [movies, setMovies] = useState([]);
@@ -29,12 +30,12 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div>
+    <Wrap>
       <h1>Trending today</h1>
       {isLoading && <Loader />}
       {movies.length > 0 && <MovieList movies={movies} />}
       {error && <p>Nothing found</p>}
-    </div>
+    </Wrap>
   );
 };
 
