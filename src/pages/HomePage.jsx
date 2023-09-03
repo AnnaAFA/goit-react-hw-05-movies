@@ -1,34 +1,41 @@
-import { MovieList } from 'components/MovieList/MovieList';
+import { Loader } from 'components/Loader/Loader';
+import MovieList from 'components/MovieList/MovieList';
+import Notiflix from 'notiflix';
 import React, { useEffect, useState } from 'react';
 import { getTrending } from 'services/api';
 
-export const HomePage = () => {
+const HomePage = () => {
   const [movies, setMovies] = useState([]);
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
+    setIsLoading(true);
     try {
       const fetchMovies = async () => {
         const response = await getTrending();
         const movies = response.results;
         if (movies.length === 0) {
-          console.log('Movies not found');
+          Notiflix.Notify.failure('Nothing found. Please try again!');
         }
         setMovies(movies);
       };
       fetchMovies();
     } catch (error) {
-      console.log('Error in catch');
+      setError(error);
     } finally {
-      console.log('Stop loading');
+      setIsLoading(false);
     }
   }, []);
 
   return (
     <div>
       <h1>Trending today</h1>
+      {isLoading && <Loader />}
       {movies.length > 0 && <MovieList movies={movies} />}
+      {error && <p>Nothing found</p>}
     </div>
   );
 };
+
+export default HomePage;

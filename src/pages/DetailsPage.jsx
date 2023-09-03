@@ -1,38 +1,52 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useRef, useState } from 'react';
 import { getMovieDetails } from 'services/api';
 import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
+import { Loader } from 'components/Loader/Loader';
+import Notiflix from 'notiflix';
 
-export const DetailsPage = () => {
+const DetailsPage = () => {
   const [movieDetails, setMovieDetails] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
   const { movieId } = useParams();
   const location = useLocation();
+  const backLinkLocationRef = useRef(location.state?.from ?? '/');
 
   useEffect(() => {
     if (!movieId) return;
+    setIsLoading(true);
 
     const fetchSearchMovies = async () => {
       try {
         const movieData = await getMovieDetails(movieId);
         setMovieDetails(movieData);
-        console.log('Success');
+        Notiflix.Notify.success('Success');
+        if (movieData.length === null) {
+          return Notiflix.Notify.failure('Something went wrong');
+        }
       } catch (error) {
-        console.error('Error in catch');
+        setError(error);
       } finally {
-        console.log('Stop loading');
+        setIsLoading(false);
       }
     };
     fetchSearchMovies();
-    // console.log(movieDetails);
   }, [movieId]);
-  console.log(location);
+
   return (
     <div>
-      {/* {error !== null && <p>Oops.. Simesing went wrong</p>} */}
+      {isLoading && <Loader />}
+      {error && <p>Opps...Sorry, something went wrong</p>}
+      <Link to={backLinkLocationRef.current}>Go back</Link>
       {movieDetails !== null && (
         <div>
-          <Link to={location.state?.from ?? '/'}>Go back</Link>
+          {/* <Link to={backLinkLocationRef.current}>Go back</Link> */}
           <img
-            src={`https://image.tmdb.org/t/p/w200${movieDetails.poster_path}`}
+            src={
+              movieDetails?.poster_path
+                ? `https://image.tmdb.org/t/p/w200${movieDetails.poster_path}`
+                : 'https://via.placeholder.com/200x300'
+            }
             alt={movieDetails.original_title}
           />
           <div>
@@ -49,9 +63,13 @@ export const DetailsPage = () => {
             <Link to="cast">Cast</Link>
             <Link to="reviews">Reviews</Link>
           </div>
-          <Outlet />
+          <Suspense fallback={<Loader />}>
+            <Outlet />
+          </Suspense>
         </div>
       )}
     </div>
   );
 };
+
+export default DetailsPage;

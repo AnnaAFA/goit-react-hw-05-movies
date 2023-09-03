@@ -1,24 +1,19 @@
-import { HomePage } from 'pages/HomePage';
 import { Route, Routes } from 'react-router-dom';
-import { DetailsPage } from 'pages/DetailsPage';
-import { Search } from '../pages/SearchPage';
+import { lazy } from 'react';
 import ShareLayout from './ShareLayout/ShareLayout';
-import Cast from './Cast/Cast';
-import Reviews from './Reviews/Reviews';
-// import {
-//   getMovieCast,
-//   getMovieDetails,
-//   getMovieReviews,
-//   getSearchMovies,
-//   getTrending,
-// } from 'services/api';
+
+const HomePage = lazy(() => import('../pages/HomePage'));
+const DetailsPage = lazy(() => import('../pages/DetailsPage'));
+const SearchPage = lazy(() => import('../pages/SearchPage'));
+const Cast = lazy(() => import('./Cast/Cast'));
+const Reviews = lazy(() => import('./Reviews/Reviews'));
 
 export const App = () => {
   return (
     <Routes>
       <Route path="/" element={<ShareLayout />}>
         <Route index element={<HomePage />} />
-        <Route path="movies" element={<Search />} />
+        <Route path="movies" element={<SearchPage />} />
         <Route path="movies/:movieId" element={<DetailsPage />}>
           <Route path="cast" element={<Cast />} />
           <Route path="reviews" element={<Reviews />} />
