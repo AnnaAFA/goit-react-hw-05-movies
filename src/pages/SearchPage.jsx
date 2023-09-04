@@ -4,6 +4,8 @@ import Notiflix from 'notiflix';
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getSearchMovies } from 'services/api';
+import { Wrap } from './DetailsPage.styled';
+import { FormStyle } from './SearchPage.styled';
 
 const SearchPage = () => {
   const [searchInput, setSearchInput] = useState('');
@@ -45,19 +47,19 @@ const SearchPage = () => {
   };
 
   return (
-    <div>
+    <Wrap>
       {error && <p>Opps...Sorry, something went wrong</p>}
       {isLoading && <Loader />}
-      <form action="" onSubmit={handleSubmit}>
+      <FormStyle onSubmit={handleSubmit}>
         <input
           type="text"
           value={searchInput}
           onChange={e => setSearchInput(e.target.value)}
         />
         <button>Search</button>
-      </form>
+      </FormStyle>
       {films.length !== 0 && <MovieList movies={films} />}
-    </div>
+    </Wrap>
   );
 };
 

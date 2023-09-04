@@ -1,16 +1,37 @@
 import styled from '@emotion/styled';
 
+export const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const Wrap = styled.ul`
   display: flex;
-  flex-wrap: wrap;
   gap: 15px;
-  list-style: none;
+  flex-wrap: wrap;
 `;
 
 export const Item = styled.li`
   display: flex;
   flex-direction: column;
   gap: 8px;
-  width: 250px;
-  list-style: none;
+  width: 150px;
+  margin-bottom: 20px;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 15px;
+  text-align: center;
+  background-color: #c4daf5;
+`;
+
+export const Name = styled.p`
+  margin: 0;
+`;
+
+export const Character = styled.p`
+  margin: 0;
+`;
+
+export const Image = styled.img`
+  border-radius: 3px;
 `;

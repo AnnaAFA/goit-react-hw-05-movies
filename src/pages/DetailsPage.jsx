@@ -42,7 +42,6 @@ const DetailsPage = () => {
       {movieDetails !== null && (
         <div>
           <WrapCard>
-            {/* <Link to={backLinkLocationRef.current}>Go back</Link> */}
             <img
               src={
                 movieDetails?.poster_path
